@@ -13,9 +13,9 @@ The following settings are required to activate this app as intended.
 
 ### settings.py
 
-`TINYMCE_JS_URL = '/media/tiny_mce/tiny_mce.js'
-TINYMCE_DEFAULT_CONFIG = {
-	'theme' : "advanced", 
+`TINYMCE_JS_URL = '/media/tiny_mce/tiny_mce.js'`
+`TINYMCE_DEFAULT_CONFIG = {
+>	'theme' : "advanced", 
 	'theme_advanced_toolbar_location' : "top",
 	'theme_advanced_toolbar_align' : "left",
 	'relative_urls': False,
