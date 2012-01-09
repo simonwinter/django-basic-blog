@@ -1,6 +1,5 @@
 from django.contrib import admin
 from django.contrib import messages
-from django.conf import settings
 from django import forms
 
 from sorl.thumbnail import get_thumbnail

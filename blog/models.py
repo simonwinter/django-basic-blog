@@ -3,6 +3,10 @@ from django.db import models
 from sorl.thumbnail import ImageField
 
 
+class PublishedManager(models.Manager):
+	def get_query_set(self):
+		return super(PublishedManager, self).get_query_set().filter(status=1)
+
 class Entry(models.Model):
 	STATUS_OPTIONS = (
 						(0, 'Draft'),
@@ -16,8 +20,8 @@ class Entry(models.Model):
 	title = models.CharField(max_length=100)
 	slug = models.SlugField(max_length=255)
 	publish_date = models.DateTimeField(auto_now_add=True)
-	status = models.IntegerField(max_length=1, choices=STATUS_OPTIONS)
-	visibility = models.IntegerField(max_length=1, choices=VISIBILITY_OPTIONS)
+	status = models.IntegerField(max_length=1, choices=STATUS_OPTIONS, default=0)
+	visibility = models.IntegerField(max_length=1, choices=VISIBILITY_OPTIONS, default=0)
 
 	body = models.TextField()
 	excerpt = models.TextField(blank=True, help_text='A short introduction for the entry. If not supplied, \
@@ -25,13 +29,22 @@ class Entry(models.Model):
 
 	category = models.ForeignKey('Category')
 	tags = models.ManyToManyField('Tag', blank=True)
+	
+	objects = models.Manager()
+	published_objects = PublishedManager()
 
 	class Meta:
 		verbose_name_plural = "Entries"
+		ordering = ['-publish_date']
 
 	def __unicode__(self):
 		return self.title
-		
+
+	@models.permalink
+	def get_absolute_url(self):
+		print 'here'
+		return ('blog.views.entry', (), {'slug': self.slug})
+    
 	def image(self):
 		try:
 			return EntryImage.objects.get(entry=self)

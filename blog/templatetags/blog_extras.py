@@ -25,7 +25,7 @@ class TaggingNode(template.Node):
 
 	def render(self, context):
 		slug = self.entry_slug.resolve(context)
-		t = template.loader.get_template('blog/fragments/%s_fragment.html' % self.mode)
+		t = template.loader.get_template('fragments/%s_fragment.html' % self.mode)
 		return t.render(Context({self.mode: self.mode_objects, 
 								'entry': Entry.objects.get(slug=slug)}, 
 								autoescape=context.autoescape))

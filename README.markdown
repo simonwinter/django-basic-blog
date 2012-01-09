@@ -29,6 +29,8 @@ The following settings are required to activate this app as intended.
         'blog',
         ...
     )
+    
+    PAGINATION_NUM_PER_PAGE = 10 # number of blog entries to display per front-end view.
 
 ### urls.py
 

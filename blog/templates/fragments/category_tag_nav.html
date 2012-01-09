@@ -1,0 +1,5 @@
+{% load blog_extras %}
+<nav class="category_tag">
+	{% list_categories entry.slug %}
+	{% list_tags entry.slug %}
+</nav>

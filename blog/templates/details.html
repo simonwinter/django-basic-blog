@@ -1,17 +1,13 @@
-{% extends 'blog/base.html' %}
-{% load thumbnail blog_extras %}
+{% extends 'base.html' %}
+{% load thumbnail %}
 {% block content %}
 <section class="article">
-	<nav>
-		{% list_categories entry.slug %}
-		{% list_tags entry.slug %}
-	</nav>
+	{% include 'fragments/category_tag_nav.html' %}
 	{% thumbnail entry.image "960x400" crop="top" as im %}
 	    <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" alt="{{ im.caption }}">
 	{% endthumbnail %}
 	<article>
 		<h2>{{ entry.title }}</h2>
-		{{ entry.slug }}
 		<span class="date">{{ entry.publish_date|date:"F j Y" }}</span>
 		{{ entry.body|safe }}
 	</article>
