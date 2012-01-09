@@ -9,8 +9,7 @@ from sorl.thumbnail.admin import AdminImageMixin
 from tinymce.widgets import TinyMCE
 
 from blog.models import Entry, EntryImage, Category, Tag
-
-from util import delete_selected_actions
+from blog.util import delete_selected_actions
 
 
 class EntryForm(forms.ModelForm):
