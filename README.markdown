@@ -13,12 +13,12 @@ The following settings are required to activate this app as intended.
 
 ### settings.py
 
-`TINYMCE_JS_URL = '/media/tiny_mce/tiny_mce.js'`
-`TINYMCE_DEFAULT_CONFIG = {
->	'theme' : "advanced", 
-	'theme_advanced_toolbar_location' : "top",
-	'theme_advanced_toolbar_align' : "left",
-	'relative_urls': False,
+    TINYMCE_JS_URL = '/media/tiny_mce/tiny_mce.js'
+    TINYMCE_DEFAULT_CONFIG = {
+	    'theme' : "advanced", 
+	    'theme_advanced_toolbar_location' : "top",
+        'theme_advanced_toolbar_align' : "left",
+        'relative_urls': False,
 	'theme_advanced_buttons1' : "bold,italic,separator,link,unlink",
 	'theme_advanced_buttons2' : "",
 	'theme_advanced_buttons3' : ""
