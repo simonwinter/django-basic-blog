@@ -64,7 +64,7 @@ class EntryAdmin(admin.ModelAdmin):
 	_thumbnail.allow_tags = True
 
 	class Media:
-		js = ('/media/j/admin.js', )
+		js = ('/media/blog_media/j/admin.js', )
 
 admin.site.register(Entry, EntryAdmin)
 
