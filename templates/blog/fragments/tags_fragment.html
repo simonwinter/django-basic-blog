@@ -1,0 +1,5 @@
+<ul class="tags">
+	{% for tag in tags %}
+	<li{% if tag in entry.tags.all %} class="current"{% endif %}>{{ tag }}</li>
+	{% endfor %}
+</ul>

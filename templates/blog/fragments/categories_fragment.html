@@ -1,0 +1,5 @@
+<ul class="categories">
+	{% for cat in categories %}
+	<li{% if entry.category == cat %} class="current"{% endif %}>{{ cat }}</li>
+	{% endfor %}
+</ul>
