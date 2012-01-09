@@ -19,24 +19,24 @@ The following settings are required to activate this app as intended.
 	    'theme_advanced_toolbar_location' : "top",
         'theme_advanced_toolbar_align' : "left",
         'relative_urls': False,
-	'theme_advanced_buttons1' : "bold,italic,separator,link,unlink",
-	'theme_advanced_buttons2' : "",
-	'theme_advanced_buttons3' : ""
-}`
+        'theme_advanced_buttons1' : "bold,italic,separator,link,unlink",
+        'theme_advanced_buttons2' : "",
+        'theme_advanced_buttons3' : ""
+    }
 
-`INSTALLED_APPS = (
-    ...
-    'blog',
-    ...
-)`
+    INSTALLED_APPS = (
+        ...
+        'blog',
+        ...
+    )
 
 ### urls.py
 
-`urlpatterns = patterns('',
-	...
-    url(r'^blog/', include('blog.urls')),
-    ...
-)`
+    urlpatterns = patterns('',
+	    ...
+        url(r'^blog/', include('blog.urls')),
+        ...
+    )
 
 ### Media URLs
 
