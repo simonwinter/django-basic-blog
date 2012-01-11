@@ -3,9 +3,10 @@
 This Django application requires the following:
 
 * Django 1.3.1 and above: it was built against 1.3.1, but may work with other versions of 1.3.
-* Django image cropping: [https://github.com/jonasundderwolf/django-image-cropping](https://github.com/jonasundderwolf/django-image-cropping).
-* easy-thumbnails is recommended, but you should be ok without it [https://github.com/SmileyChris/easy-thumbnails]
-* django tiny mce [http://code.google.com/p/django-tinymce/](http://code.google.com/p/django-tinymce/)
+* Django image cropping: https://github.com/jonasundderwolf/django-image-cropping
+* easy-thumbnails is recommended, but you should be ok without it https://github.com/SmileyChris/easy-thumbnails
+* django tiny mce http://code.google.com/p/django-tinymce/
+* `django.contrib.staticfiles` https://docs.djangoproject.com/en/dev/howto/static-files/
 
 
 ## Settings
