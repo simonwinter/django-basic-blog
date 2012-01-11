@@ -1,5 +1,5 @@
 <ul class="categories">
 	{% for cat in categories %}
-	<li{% if entry.category == cat %} class="current"{% endif %}>{{ cat }}</li>
+	<li{% if entry.category == cat %} class="current"{% endif %}><a href="{{ cat.get_absolute_url }}">{{ cat }}</a></li>
 	{% endfor %}
 </ul>

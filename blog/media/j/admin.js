@@ -6,6 +6,7 @@ $(document).ready(function() {
 	$('#id_excerpt').keypress(function() {
 		edited = true;
 	});
+
 });
 
 function entryOnInit() {

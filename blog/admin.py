@@ -2,13 +2,14 @@ from django.contrib import admin
 from django.contrib import messages
 from django import forms
 
-from sorl.thumbnail import get_thumbnail
-from sorl.thumbnail.admin import AdminImageMixin
+# from sorl.thumbnail import get_thumbnail
+# from sorl.thumbnail.admin import AdminImageMixin
+# from sorl.thumbnail.helpers import ThumbnailError
 
 from tinymce.widgets import TinyMCE
 
-from blog.models import Entry, EntryImage, Category, Tag
-from blog.util import delete_selected_actions
+from blog.models import Entry, Category, Tag
+from blog.util import delete_selected_actions, thumbnail
 
 
 class EntryForm(forms.ModelForm):
@@ -21,15 +22,7 @@ class EntryForm(forms.ModelForm):
 		model = Entry
 
 
-class ImageInline(AdminImageMixin, admin.StackedInline):
-	model = EntryImage
-	max_num = 1
-	extra = 1
-	verbose_name = 'Banner Image'
-
-
 class EntryAdmin(admin.ModelAdmin):
-	inlines = [ImageInline,]
 	list_display = ('_thumbnail', 'title', 'category', 'author', 'publish_date', 'status', 'visibility')
 	list_filter = ('category__name', 'tags__name')
 	list_display_links = ('_thumbnail', 'title',)
@@ -49,15 +42,13 @@ class EntryAdmin(admin.ModelAdmin):
 		('Tagging', {
 			'fields': ('category', 'tags',)
 		}),
+		('Banner Image', {
+			'fields': ('image', 'caption', 'cropping')
+		})
 	)
 
 	def _thumbnail(self, obj):
-		try:
-			entryIm = EntryImage.objects.get(entry=obj)
-			im = get_thumbnail(entryIm.image, '60')
-			return u'<img src="%s" width="60" alt="Thumbnail image">' % im.url
-		except EntryImage.DoesNotExist:
-			return u'No Thumbnail'
+		return thumbnail(obj.image)
 
 	_thumbnail.short_description = u'Banner Image'
 	_thumbnail.allow_tags = True
@@ -74,7 +65,7 @@ class EntryAdmin(admin.ModelAdmin):
 		return Entry.objects.filter(user=request.user)
 
 	class Media:
-		js = ('/media/blog_media/j/admin.js', )
+		js = ('/media/blog_media/j/admin.js',)
 
 admin.site.register(Entry, EntryAdmin)
 

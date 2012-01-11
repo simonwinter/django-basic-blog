@@ -3,7 +3,8 @@
 This Django application requires the following:
 
 * Django 1.3.1 and above: it was built against 1.3.1, but may work with other versions of 1.3.
-* sorl thumbnail [http://thumbnail.sorl.net](http://thumbnail.sorl.net)
+* Django image cropping: [https://github.com/jonasundderwolf/django-image-cropping](https://github.com/jonasundderwolf/django-image-cropping).
+* easy-thumbnails is recommended, but you should be ok without it [https://github.com/SmileyChris/easy-thumbnails]
 * django tiny mce [http://code.google.com/p/django-tinymce/](http://code.google.com/p/django-tinymce/)
 
 
@@ -31,6 +32,10 @@ The following settings are required to activate this app as intended.
     )
     
     PAGINATION_NUM_PER_PAGE = 10 # number of blog entries to display per front-end view.
+    
+    # for use with the thumbnail cropping in the admin.
+    IMAGE_CROPPING_THUMB_SIZE = (400, 400)
+	IMAGE_CROPPING_SIZE = '960x280'
 
 ### urls.py
 
@@ -45,3 +50,7 @@ The following settings are required to activate this app as intended.
 To use tiny mce in the admin, create a symbolic link to the media/tiny_mce directory located in the python site package for tinymce (or just copy the media/tiny_mce directory to the site's media directory). Once this is done, make sure the setting for `TINYMCE_JS_URL` is correct.
 
 In the media directory, add a symbolic link to `blog/media` - name this link `blog_media`.
+
+## Image cropping in admin
+
+The image cropping requires jcrop [http://deepliquid.com/content/Jcrop.html](http://deepliquid.com/content/Jcrop.html). In my installation I have simply added it as a submodule: `git submodule add git://github.com/tapmodo/Jcrop.git blog/media/j/jcrop`. Whether you download or add as a submodule, make sure the path matches the link used in the `EntryAdmin` class.

@@ -1,8 +1,9 @@
 from django.db import models
 from django.db.models import Q
+from django.conf import settings
 from django.contrib.auth.models import User
 
-from sorl.thumbnail import ImageField
+from image_cropping.fields import ImageRatioField, ImageCropField
 
 
 class PublishedManager(models.Manager):
@@ -37,6 +38,10 @@ class Entry(models.Model):
 
 	user = models.ForeignKey(User)
 	
+	image = ImageCropField(upload_to='i/uploads/%Y/%m')
+	cropping = ImageRatioField('image', settings.IMAGE_CROPPING_SIZE)
+	caption = models.CharField(max_length=255, blank=True)
+	
 	objects = models.Manager()
 	published_objects = PublishedManager()
 
@@ -49,23 +54,7 @@ class Entry(models.Model):
 
 	@models.permalink
 	def get_absolute_url(self):
-		print 'here'
 		return ('blog.views.entry', (), {'slug': self.slug})
-    
-	def image(self):
-		try:
-			return EntryImage.objects.get(entry=self)
-		except EntryImage.DoesNotExist:
-			return None
-
-
-class EntryImage(models.Model):
-	entry = models.ForeignKey(Entry)
-	image = ImageField(upload_to='i/uploads/%Y/%m')
-	caption = models.CharField(max_length=255, blank=True)
-
-	def __unicode__(self):
-		return self.image.name
 
 
 class Category(models.Model):
@@ -80,6 +69,10 @@ class Category(models.Model):
 	def __unicode__(self):
 		return self.name
 
+	@models.permalink
+	def get_absolute_url(self):
+		return ('blog.views.category_tag_entries', (), {'mode': 'category', 'slug': self.slug})
+
 
 class Tag(models.Model):
 	name = models.CharField(max_length=100, help_text='Maximum of 70 characters', verbose_name='Tag Name')
@@ -87,3 +80,7 @@ class Tag(models.Model):
 
 	def __unicode__(self):
 		return self.name
+
+	@models.permalink
+	def get_absolute_url(self):
+		return ('blog.views.category_tag_entries', (), {'mode': 'tag', 'slug': self.slug})

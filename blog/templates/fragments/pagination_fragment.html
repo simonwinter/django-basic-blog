@@ -4,11 +4,11 @@
         {% if entries.has_previous %}
             <a href="?page={{ entries.previous_page_number }}">previous</a>
         {% endif %}
-
+		{% comment %}
         <span class="current">
             Page {{ entries.number }} of {{ entries.paginator.num_pages }}.
         </span>
-
+        {% endcomment %}
         {% if entries.has_next %}
             <a href="?page={{ entries.next_page_number }}">next</a>
         {% endif %}

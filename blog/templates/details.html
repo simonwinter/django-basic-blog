@@ -3,9 +3,8 @@
 {% block content %}
 <section class="article">
 	{% include 'fragments/category_tag_nav.html' %}
-	{% thumbnail entry.image "960x400" crop="top" quality=50 as im %}
-	    <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" alt="{{ entry.image.caption }}">
-	{% endthumbnail %}
+	{% thumbnail entry.image 960x280 box=entry.cropping crop detail as im %}
+	    <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" alt="{{ entry.caption }}">
 	<article>
 		<h2>{{ entry.title }}</h2>
 		<span class="date">{{ entry.publish_date|date:"F j Y" }}</span>
