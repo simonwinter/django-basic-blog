@@ -1,10 +1,7 @@
+from django import forms
+from django.conf import settings
 from django.contrib import admin
 from django.contrib import messages
-from django import forms
-
-# from sorl.thumbnail import get_thumbnail
-# from sorl.thumbnail.admin import AdminImageMixin
-# from sorl.thumbnail.helpers import ThumbnailError
 
 from tinymce.widgets import TinyMCE
 
@@ -65,7 +62,7 @@ class EntryAdmin(admin.ModelAdmin):
 		return Entry.objects.filter(user=request.user)
 
 	class Media:
-		js = ('/media/blog_media/j/admin.js',)
+		js = (settings.STATIC_URL + 'blog/j/admin.js',)
 
 admin.site.register(Entry, EntryAdmin)
 

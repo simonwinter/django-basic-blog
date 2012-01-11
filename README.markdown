@@ -14,7 +14,7 @@ The following settings are required to activate this app as intended.
 
 ### settings.py
 
-    TINYMCE_JS_URL = '/media/tiny_mce/tiny_mce.js'
+    TINYMCE_JS_URL = '/static/blog/j/tiny_mce/tiny_mce.js'
     TINYMCE_DEFAULT_CONFIG = {
 	    'theme' : "advanced", 
 	    'theme_advanced_toolbar_location' : "top",
@@ -44,13 +44,6 @@ The following settings are required to activate this app as intended.
         url(r'^blog/', include('blog.urls')),
         ...
     )
-
-### Media URLs
-
-To use tiny mce in the admin, create a symbolic link to the media/tiny_mce directory located in the python site package for tinymce (or just copy the media/tiny_mce directory to the site's media directory). Once this is done, make sure the setting for `TINYMCE_JS_URL` is correct.
-
-In the media directory, add a symbolic link to `blog/media` - name this link `blog_media`.
-
-## Image cropping in admin
-
-The image cropping requires jcrop [http://deepliquid.com/content/Jcrop.html](http://deepliquid.com/content/Jcrop.html). In my installation I have simply added it as a submodule: `git submodule add git://github.com/tapmodo/Jcrop.git blog/media/j/jcrop`. Whether you download or add as a submodule, make sure the path matches the link used in the `EntryAdmin` class.
+    
+    from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+    urlpatterns += staticfiles_urlpatterns()
