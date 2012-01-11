@@ -3,8 +3,8 @@
 {% block content %}
 <section class="article">
 	{% include 'fragments/category_tag_nav.html' %}
-	{% thumbnail entry.image "960x400" crop="top" as im %}
-	    <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" alt="{{ im.caption }}">
+	{% thumbnail entry.image "960x400" crop="top" quality=50 as im %}
+	    <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" alt="{{ entry.image.caption }}">
 	{% endthumbnail %}
 	<article>
 		<h2>{{ entry.title }}</h2>

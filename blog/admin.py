@@ -30,7 +30,7 @@ class ImageInline(AdminImageMixin, admin.StackedInline):
 
 class EntryAdmin(admin.ModelAdmin):
 	inlines = [ImageInline,]
-	list_display = ('_thumbnail', 'title', 'category', 'publish_date', 'status')
+	list_display = ('_thumbnail', 'title', 'category', 'author', 'publish_date', 'status', 'visibility')
 	list_filter = ('category__name', 'tags__name')
 	list_display_links = ('_thumbnail', 'title',)
 	prepopulated_fields = {'slug': ('title',)}
@@ -50,17 +50,28 @@ class EntryAdmin(admin.ModelAdmin):
 			'fields': ('category', 'tags',)
 		}),
 	)
-	
+
 	def _thumbnail(self, obj):
 		try:
 			entryIm = EntryImage.objects.get(entry=obj)
 			im = get_thumbnail(entryIm.image, '60')
 			return u'<img src="%s" width="60" alt="Thumbnail image">' % im.url
-		except Exception:
+		except EntryImage.DoesNotExist:
 			return u'No Thumbnail'
-    
+
 	_thumbnail.short_description = u'Banner Image'
 	_thumbnail.allow_tags = True
+
+	def author(self, obj):
+		return obj.user
+
+	def save_model(self, request, obj, form, change):
+		if not change:
+			obj.user = request.user
+		obj.save()
+
+	def queryset(self, request):
+		return Entry.objects.filter(user=request.user)
 
 	class Media:
 		js = ('/media/blog_media/j/admin.js', )

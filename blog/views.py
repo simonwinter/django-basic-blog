@@ -23,19 +23,19 @@ def pagination(request, entries_list, template='category_tags_list.html'):
 
 
 def home(request):
-	entries_list = get_list_or_404(Entry.published_objects)
+	entries_list = get_list_or_404(Entry.published_objects.accessible_entries(request.user))
 
 	return pagination(request, entries_list, template='home.html')
 
 def entry(request, slug):
 	return render_to_response('details.html', {
-												'entry': get_object_or_404(Entry.published_objects, slug=slug)})
+												'entry': get_object_or_404(Entry.published_objects.accessible_entries(request.user), slug=slug)})
 
 def category_tag_entries(request, slug, mode):
 	if mode == 'category':
-		entries_list = get_list_or_404(Entry.published_objects, category__slug=slug)
+		entries_list = get_list_or_404(Entry.published_objects.accessible_entries(request.user), category__slug=slug)
 	elif mode == 'tag':
-		entries_list = get_list_or_404(Entry.published_objects, tags__slug__contains=slug)
+		entries_list = get_list_or_404(Entry.published_objects.accessible_entries(request.user), tags__slug__contains=slug)
 	else:
 		raise Http404
 

@@ -1,4 +1,6 @@
 from django.db import models
+from django.db.models import Q
+from django.contrib.auth.models import User
 
 from sorl.thumbnail import ImageField
 
@@ -6,6 +8,9 @@ from sorl.thumbnail import ImageField
 class PublishedManager(models.Manager):
 	def get_query_set(self):
 		return super(PublishedManager, self).get_query_set().filter(status=1)
+
+	def accessible_entries(self, user):
+		return self.get_query_set().exclude(Q(visibility=1), ~Q(user=user))
 
 class Entry(models.Model):
 	STATUS_OPTIONS = (
@@ -29,6 +34,8 @@ class Entry(models.Model):
 
 	category = models.ForeignKey('Category')
 	tags = models.ManyToManyField('Tag', blank=True)
+
+	user = models.ForeignKey(User)
 	
 	objects = models.Manager()
 	published_objects = PublishedManager()
@@ -48,7 +55,7 @@ class Entry(models.Model):
 	def image(self):
 		try:
 			return EntryImage.objects.get(entry=self)
-		except:
+		except EntryImage.DoesNotExist:
 			return None
 
 
