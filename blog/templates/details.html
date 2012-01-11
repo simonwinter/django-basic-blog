@@ -3,12 +3,15 @@
 {% block content %}
 <section class="article">
 	{% include 'fragments/category_tag_nav.html' %}
-	{% thumbnail entry.image 960x280 box=entry.cropping crop detail as im %}
+	{% thumbnail entry.image 960x280 box=entry.cropping crop quality=75 as im %}
 	    <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" alt="{{ entry.caption }}">
 	<article>
 		<h2>{{ entry.title }}</h2>
 		<span class="date">{{ entry.publish_date|date:"F j Y" }}</span>
-		{{ entry.body|safe }}
+		<a href="{% url blog.views.user entry.user.username %}">{{ entry.user }}</a>
+		<div class="content">
+			{{ entry.body|safe }}
+		</div>
 	</article>
 </section>
 {% endblock %}

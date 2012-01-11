@@ -21,6 +21,10 @@ def pagination(request, entries_list, template='category_tags_list.html'):
 
 	return render_to_response(template, {'entries': entries})
 
+def user(request, user):
+	entries_list = get_list_or_404(Entry.published_objects.accessible_entries(request.user).filter(user__username=user))
+
+	return pagination(request, entries_list, template='home.html')
 
 def home(request):
 	entries_list = get_list_or_404(Entry.published_objects.accessible_entries(request.user))
@@ -28,8 +32,7 @@ def home(request):
 	return pagination(request, entries_list, template='home.html')
 
 def entry(request, slug):
-	return render_to_response('details.html', {
-												'entry': get_object_or_404(Entry.published_objects.accessible_entries(request.user), slug=slug)})
+	return render_to_response('details.html', {'entry': get_object_or_404(Entry.published_objects.accessible_entries(request.user), slug=slug)})
 
 def category_tag_entries(request, slug, mode):
 	if mode == 'category':
