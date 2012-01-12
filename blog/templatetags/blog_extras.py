@@ -7,15 +7,19 @@ register = template.Library()
 
 def get_slug(token):
 	try:
-		tag_name, entry_slug = token.split_contents()
+		tag_name, entry = token.split_contents()
 	except ValueError:
-		raise template.TemplateSyntaxError("%r tag requires a single argument" % token.contents.split()[0])
+		return None
+# 		raise template.TemplateSyntaxError("%r tag requires a single argument" % token.contents.split()[0])
 		
-	return entry_slug
+	return entry
 
 class TaggingNode(template.Node):
-	def __init__(self, entry_slug, mode):
-		self.entry_slug = template.Variable(entry_slug)
+	def __init__(self, entry, mode):
+		if entry:
+			self.entry = template.Variable(entry)
+		else:
+			self.entry = None
 		self.mode = mode
 		
 		if mode == 'categories':
@@ -24,10 +28,20 @@ class TaggingNode(template.Node):
 			self.mode_objects = Tag.objects.all()
 
 	def render(self, context):
-		slug = self.entry_slug.resolve(context)
-		t = template.loader.get_template('fragments/%s_fragment.html' % self.mode)
-		return t.render(Context({self.mode: self.mode_objects, 
-								'entry': Entry.objects.get(slug=slug)}, 
+		t = template.loader.get_template('fragments/categories_tags_fragment.html')
+		data = {self.mode: self.mode_objects}
+
+		if self.entry:
+			entry = self.entry.resolve(context)
+			data = dict(data.items() + {'entry': entry or None}.items())
+
+		if 'category' in context:
+			data = dict(data.items() + {'category': context['category']}.items())
+		elif 'tag' in context:
+			pass
+			data = dict(data.items() + {'tag': context['tag']}.items())
+
+		return t.render(Context(data, 
 								autoescape=context.autoescape))
 
 

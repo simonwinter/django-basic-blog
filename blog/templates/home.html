@@ -1,11 +1,7 @@
 {% extends 'base.html' %}
-{% load thumbnail %}
+
+{% block bodyclass %}home{% endblock %}
+
 {% block content %}
-	{% include 'fragments/pagination_fragment.html' %}
-	{% for entry in entries.object_list %}
-	<article>
-		<h3><a href="{{ entry.get_absolute_url }}">{{ entry.title }}</a></h3>
-		<p>{{ entry.excerpt }}</p>
-	</article>
-	{% endfor %}
+	{% include 'fragments/entry_list.html' %}
 {% endblock %}

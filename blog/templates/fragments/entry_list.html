@@ -1,0 +1,20 @@
+{% load thumbnail %}
+<div class="entry_list">
+	<h2>Latest {% if category %}<em>{{ category }}</em> entries{% else %}{% if tag %}<em>{{ tag }}</em> entries{% endif %}{% endif %}</h2>
+		
+	{% for entry in entries.object_list %}
+	<article class="grid_3 {% cycle '' '' 'omega' %}{% if forloop.counter == 1 or forloop.counter|divisibleby:"4" %} first{% endif %}">
+		<h3><a href="{{ entry.get_absolute_url }}">{{ entry.title }}</a></h3>
+		{% thumbnail entry.image 217x140 box=entry.cropping crop bw quality=75 as im %}
+		{% thumbnail entry.image 217x140 box=entry.cropping crop quality=75 as rollover %}
+		<a href="{{ entry.get_absolute_url }}" class="img_link"><img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" alt="{{ entry.caption }}" class="greyscale"><img src="{{ rollover.url }}" width="{{ rollover.width }}" height="{{ rollover.height }}" alt="{{ entry.caption }}" class="rollover"></a>
+		<p>{{ entry.excerpt|truncatewords_html:25 }}</p>
+	</article>
+	{% if forloop.counter|divisibleby:"3" %}
+	<div class="clear"></div>
+	<hr>
+	{% endif %}
+	{% endfor %}
+	<div class="clear"></div>
+	{% include 'fragments/pagination_fragment.html' %}
+</div>

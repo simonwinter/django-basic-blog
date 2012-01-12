@@ -1,17 +1,26 @@
 {% extends 'base.html' %}
 {% load thumbnail %}
+
+{% block bodyclass %}details{% endblock %}
+
 {% block content %}
+<hr>
 <section class="article">
-	{% include 'fragments/category_tag_nav.html' %}
-	{% thumbnail entry.image 960x280 box=entry.cropping crop quality=75 as im %}
-	    <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" alt="{{ entry.caption }}">
-	<article>
-		<h2>{{ entry.title }}</h2>
-		<span class="date">{{ entry.publish_date|date:"F j Y" }}</span>
-		<a href="{% url blog.views.user entry.user.username %}">{{ entry.user }}</a>
-		<div class="content">
-			{{ entry.body|safe }}
+		<div class="grid_3 alpha">
+			<h1>{{ entry.title }}</h1>
+			by <a href="{% url blog.views.user entry.user.username %}" class="user">{{ entry.user }}</a> | <a href="{{ entry.category.get_absolute_url }}" class="category">{{ entry.category }}</a>
 		</div>
-	</article>
+		<div class="grid_9 omega">
+			{% thumbnail entry.image 700x280 box=entry.cropping crop quality=75 as im %}
+			<img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" alt="{{ entry.caption }}">
+			<article>
+				<div class="content">
+					<span class="date">{{ entry.publish_date|date:"F j Y" }}</span>
+					{{ entry.body|safe }}
+				</div>
+			</article>
+		</div>
+		<div class="clear"></div>
+	
 </section>
 {% endblock %}

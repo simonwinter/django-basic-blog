@@ -1,0 +1,17 @@
+{% if categories %}
+<ul class="categories">
+	{% for cat in categories %}
+	<li {% if entry.category == cat or category == cat %}class="current"{% endif %}><a href="{{ cat.get_absolute_url }}">{{ cat }}</a></li>
+	{% endfor %}
+	<li class="show_all"><a href="">show all categories</a></li>
+</ul>
+{% endif %}
+
+{% if tags %}
+<ul class="tags">
+	{% for t in tags %}
+	<li {% if t in entry.tags.all or t == tag %}class="current"{% endif %}><a href="{{ t.get_absolute_url }}">{{ t }}</a></li>
+	{% endfor %}
+	<li class="show_all"><a href="">show all tags</a></li>
+</ul>
+{% endif %}

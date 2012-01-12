@@ -1,4 +1,5 @@
-{% spaceless %}
+{% load static blog_extras %}
+{% get_static_prefix as STATIC_PREFIX %}
 <!DOCTYPE html>   
 <!--[if lt IE 7 ]> <html lang="en" class="no-js ie6"> <![endif]-->
 <!--[if IE 7 ]>    <html lang="en" class="no-js ie7"> <![endif]-->
@@ -12,27 +13,57 @@
 	<title>{% block title %}{% endblock %}</title>
 	<meta name="description" content="">
 	<meta name="keywords" content="">
-	<meta name="viewport" content="width=device-width; initial-scale=1.0">
+<!-- 	<meta name="viewport" content="width=device-width; initial-scale=1.0"> -->
 	<!-- !CSS -->
-	
+	<link rel="stylesheet" href="{{ STATIC_PREFIX }}blog/css/960.gs/reset.css" />
+	<link rel="stylesheet" href="{{ STATIC_PREFIX }}blog/css/960.gs/text.css" />
+	<link rel="stylesheet" href="{{ STATIC_PREFIX }}blog/css/960.gs/960_12_col.css" />
+	<link rel="stylesheet" href="{{ STATIC_PREFIX }}blog/css/default.css">
 	<!-- !Modernizr - All other JS at bottom -->
-<!-- 	<script src="js/modernizr-1.5.min.js"></script> -->
+	<script src="{{ STATIC_PREFIX }}blog/j/modernizr-2.0.6.js"></script>
 	{% block head %}{% endblock %}
 </head>
 <!-- !Body -->
-<body>
-	<div id="container">
-		<header>
-		</header><!-- /header -->
-		
-		<section id="main">
-			{% block content %}{% endblock %}
-		</section><!-- /main -->
-		
-		<footer>
-		
-		</footer><!-- /footer -->
+<body class="{% block bodyclass %}{% endblock %}">
+	<div id="container" class="container_12">
+		<div class="grid_12">
+			<header>
+				{% block header %}
+				<div class="grid_3 alpha">
+					<a class="title" href="{% url blog.views.home %}">Blog</a>
+				</div>
+				<div class="grid_3 categories">
+					<h2>Categories</h2>
+					{% if entry %}
+					{% list_categories entry %}
+					{% else %}
+					{% list_categories %}
+					{% endif %}
+				</div>
+				<div class="grid_3 omega tags">
+					<h2>Tags</h2>
+					{% if entry %}
+					{% list_tags entry %}
+					{% else %}
+					{% list_tags %}
+					{% endif %}
+				</div>
+				<div class="clear"></div>
+				{% endblock %}
+			</header><!-- /header -->
+			
+			<section id="main">
+				{% block content %}{% endblock %}
+			</section><!-- /main -->
+			
+			<footer>
+			
+			</footer><!-- /footer -->
+		</div>
 	</div><!--!/#container -->
+	
+	<script src="{{ STATIC_PREFIX }}blog/j/jquery.1.7.1.min.js"></script>
+	<script src="{{ STATIC_PREFIX }}blog/j/jquery.equal-height-columns.js"></script>
+	<script src="{{ STATIC_PREFIX }}blog/j/custom.js"></script>
 </body>
 </html>
-{% endspaceless %}
