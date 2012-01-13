@@ -33,6 +33,12 @@ header .user,
 header .category {
 	font-weight: bold;
 }
+header .omega {
+	padding-top: 70px;
+}
+header .omega span {
+	cursor: pointer;
+}
 
 /* entry_list fragment. */
 .entry_list h2 {
@@ -106,8 +112,8 @@ body.details .date {
 	font-style: italic;
 	margin: 10px auto;
 }
-body.details #main {
-	margin-top: 40px;
+body.details header {
+	margin-bottom: 40px;
 }
 
 body.details .image_caption {
