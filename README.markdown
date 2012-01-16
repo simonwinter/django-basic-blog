@@ -15,16 +15,21 @@ The following settings are required to activate this app as intended.
 
 ### settings.py
 
-    TINYMCE_JS_URL = '/static/blog/j/tiny_mce/tiny_mce.js'
-    TINYMCE_DEFAULT_CONFIG = {
-	    'theme' : "advanced", 
-	    'theme_advanced_toolbar_location' : "top",
-        'theme_advanced_toolbar_align' : "left",
-        'relative_urls': False,
-        'theme_advanced_buttons1' : "bold,italic,separator,link,unlink",
-        'theme_advanced_buttons2' : "",
-        'theme_advanced_buttons3' : ""
-    }
+	TINYMCE_JS_URL = '/static/blog/j/tiny_mce/tiny_mce.js'
+	TINYMCE_DEFAULT_CONFIG = {
+		'theme' : "advanced", 
+		'theme_advanced_toolbar_location' : "top",
+		'theme_advanced_toolbar_align' : "left",
+		'relative_urls': False,
+		'theme_advanced_buttons1' : "bold,italic,separator,link,unlink",
+		'theme_advanced_buttons2' : "",
+		'theme_advanced_buttons3' : "",
+		'plugins': "paste",
+		'paste_auto_cleanup_on_paste' : True,
+		'paste_remove_styles' : True,
+		'paste_remove_styles_if_webkit' : True,
+	    'paste_strip_class_attributes': True,
+	}
 
     INSTALLED_APPS = (
         ...
