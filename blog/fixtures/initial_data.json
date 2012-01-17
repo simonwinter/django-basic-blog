@@ -1,11 +1,1 @@
-[
-	{
-		"pk": 1, 
-		"model": "blog.category", 
-		"fields": {
-			"name": "Uncategorised", 
-			"can_delete": false, 
-			"slug": "uncategorised"
-		}
-	}
-]
+[{"pk": 1, "model": "blog.modelwithslug", "fields": {}}, {"pk": 1, "model": "blog.category", "fields": {"name": "Uncategorised", "can_delete": false, "slug": "uncategorised"}}]

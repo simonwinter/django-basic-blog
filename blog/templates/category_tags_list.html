@@ -1,5 +1,10 @@
 {% extends 'base.html' %}
-{% load thumbnail %}
+
+{% block javascript %}
+{{ block.super }}
+<script src="{{ STATIC_PREFIX }}endless_pagination/js/endless.js" type="text/javascript" charset="utf-8"></script>
+<script src="{{ STATIC_PREFIX }}endless_pagination/js/endless_on_scroll.js" type="text/javascript" charset="utf-8"></script>
+{% endblock %}
 
 {% block bodyclass %}category_tag{% endblock %}
 

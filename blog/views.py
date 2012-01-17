@@ -9,7 +9,7 @@ from blog.models import Entry, Category, Tag
 from endless_pagination.decorators import page_template
 
 
-@page_template("fragments/entry_fragment.html") # just add this decorator
+@page_template("fragments/entry_fragment.html")
 def paging(request, template="home.html",
     extra_context=None):
     context = {

@@ -5,6 +5,8 @@ from django.contrib.auth.models import User
 
 from image_cropping.fields import ImageRatioField, ImageCropField
 
+from util import unique_slugify
+
 
 class PublishedManager(models.Manager):
 	def get_query_set(self):
@@ -13,7 +15,16 @@ class PublishedManager(models.Manager):
 	def accessible_entries(self, user):
 		return self.get_query_set().exclude(Q(visibility=1), ~Q(user=user))
 
-class Entry(models.Model):
+class ModelWithSlug(models.Model):
+	def save(self, **kwargs):
+		if self.name:
+			unique_slugify(self, self.name)
+		elif self.title:
+			unique_slugify(self, self.title)
+		
+		super(ModelWithSlug, self).save()
+
+class Entry(ModelWithSlug):
 	STATUS_OPTIONS = (
 						(0, 'Draft'),
 						(1, 'Published'),
@@ -56,8 +67,12 @@ class Entry(models.Model):
 	def get_absolute_url(self):
 		return ('blog.views.entry', (), {'slug': self.slug})
 
+	def save(self, **kwargs):
+		unique_slugify(self, self.title)
+		super(Entry, self).save()
 
-class Category(models.Model):
+
+class Category(ModelWithSlug):
 	name = models.CharField(max_length=100, help_text='Maximum of 70 characters', verbose_name='Category Name')
 	slug = models.SlugField(max_length=255)
 	can_delete = models.BooleanField(default=True)
@@ -74,7 +89,7 @@ class Category(models.Model):
 		return ('blog.views.category_tag_entries', (), {'mode': 'category', 'slug': self.slug})
 
 
-class Tag(models.Model):
+class Tag(ModelWithSlug):
 	name = models.CharField(max_length=100, help_text='Maximum of 70 characters', verbose_name='Tag Name')
 	slug = models.SlugField(max_length=255)
 
