@@ -7,6 +7,7 @@ This Django application requires the following:
 * easy-thumbnails is recommended, but you should be ok without it https://github.com/SmileyChris/easy-thumbnails
 * django tiny mce http://code.google.com/p/django-tinymce/
 * `django.contrib.staticfiles` https://docs.djangoproject.com/en/dev/howto/static-files/
+* Endless pagination http://code.google.com/p/django-endless-pagination/
 
 
 ## Settings
@@ -37,7 +38,10 @@ The following settings are required to activate this app as intended.
         ...
     )
     
-    PAGINATION_NUM_PER_PAGE = 10 # number of blog entries to display per front-end view.
+    # Pagination settings for blog entry views.
+	ENDLESS_PAGINATION_PER_PAGE = 3 # change this to whatever suits your page views.
+	ENDLESS_PAGINATION_PREVIOUS_LABEL = '&larr;'
+	ENDLESS_PAGINATION_NEXT_LABEL = '&rarr;'
     
     # for use with the thumbnail cropping in the admin.
     IMAGE_CROPPING_THUMB_SIZE = (400, 400)

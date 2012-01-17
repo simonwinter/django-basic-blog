@@ -1,0 +1,19 @@
+{% load thumbnail endless %}
+{% paginate objects %}
+{% for entry in objects %}
+<article class="grid_3 {% cycle 'alpha' '' 'omega' %}">
+	<h3><a href="{{ entry.get_absolute_url }}">{{ entry.title }}</a></h3>
+	{% thumbnail entry.image 217x140 box=entry.cropping crop bw quality=75 as im %}
+	{% thumbnail entry.image 217x140 box=entry.cropping crop quality=75 as rollover %}
+	<a href="{{ entry.get_absolute_url }}" class="img_link"><img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" alt="{{ entry.caption }}" class="greyscale"><img src="{{ rollover.url }}" width="{{ rollover.width }}" height="{{ rollover.height }}" alt="{{ entry.caption }}" class="rollover"></a>
+	<p>{{ entry.excerpt|truncatewords_html:25 }}</p>
+</article>
+{% if forloop.counter|divisibleby:"3" %}
+<div class="clear"></div>
+<hr>
+{% endif %}
+{% endfor %}
+<div class="clear"></div>
+<nav class="pagination">
+	{% show_more %}
+</nav>
