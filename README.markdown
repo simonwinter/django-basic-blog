@@ -16,7 +16,7 @@ The following settings are required to activate this app as intended.
 
 ### settings.py
 
-	TINYMCE_JS_URL = '/static/blog/j/tiny_mce/tiny_mce.js'
+	TINYMCE_JS_URL = '/static/tiny_mce/tiny_mce.js'
 	TINYMCE_DEFAULT_CONFIG = {
 		'theme' : "advanced", 
 		'theme_advanced_toolbar_location' : "top",
@@ -35,6 +35,7 @@ The following settings are required to activate this app as intended.
     INSTALLED_APPS = (
         ...
         'blog',
+        'tinymce',
         ...
     )
     
